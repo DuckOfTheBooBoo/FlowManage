@@ -1,0 +1,8 @@
+/** @format */
+
+body {
+	background-image: url("background.svg");
+	width: 100dvw;
+	height: 100dvh;
+	display: flex;
+}
