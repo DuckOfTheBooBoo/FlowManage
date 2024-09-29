@@ -21,56 +21,68 @@
     <title>Create New User</title>
     </h:head>
     <h:body>
-        <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4">Register</h2>
-                <!-- JSF Form -->
-                <h:form>
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">First Name</label>
-                        <h:inputText id="firstName" value="#{registrationBean.firstName}" required="true" 
-                                     class="form-control" 
-                                     pt:placeholder="Enter your first name">
-                            <f:validateLength minimum="1" />
-                        </h:inputText>
-                        <h:message for="firstName" class="text-danger" />
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="lastName" class="form-label">Last Name (Optional)</label>
-                        <h:inputText id="lastName" value="#{registrationBean.lastName}" 
-                                     class="form-control" 
-                                     pt:placeholder="Enter your last name" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <h:inputText id="email" value="#{registrationBean.email}" required="true"
-                                     class="form-control" 
-                                     pt:placeholder="Enter your email">
-                            <f:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" />
-                        </h:inputText>
-                        <h:message for="email" class="text-danger" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <h:inputSecret id="password" value="#{registrationBean.password}" required="true" 
-                                       class="form-control" 
-                                       pt:placeholder="Enter your password">
-                            <f:validateLength minimum="6" />
-                        </h:inputSecret>
-                        <h:message for="password" class="text-danger" />
-                    </div>
-
-                    <div class="d-grid">
-                        <h:commandButton value="Register" action="#{registrationBean.register}" class="btn btn-primary" />
-                    </div>
-                </h:form>
-            </div>
+    <div class="container d-flex flex-row">
+      <h:form class="form">
+        <h3>Sign Up</h3>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <h:inputText
+            id="firstName"
+            class="form-control"
+            pt:placeholder="Enter your first name"
+            value="#{registrationBean.firstName}"
+            >
+              <f:validateRequired />
+              <f:validateLength minimum="1" />
+          </h:inputText>
+          <h:message for="firstName" class="text-danger" />
         </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <h:inputText
+            id="lastName"
+            class="form-control"
+            pt:placeholder="Enter your last name"
+            value="#{registrationBean.lastName}"
+              >
+              <f:validateLength minimum="1" />
+          </h:inputText>
+          <h:message for="lastName" class="text-danger" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <h:inputText
+            id="email"
+            class="form-control"
+            pt:placeholder="Enter your email"
+            value="#{registrationBean.email}"
+              >
+              <f:validateRequired/>
+          </h:inputText>
+          <h:message for="email" class="text-danger" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <h:inputSecret
+            id="password"
+            class="form-control"
+            pt:placeholder="Enter your password"
+            value="#{registrationBean.password}"
+              >
+              <f:validateRequired/>
+          </h:inputSecret>
+          <h:message for="password" class="text-danger" />
+        </div>
+        <h:commandButton value="Get Started" class="btn" action="#{registrationBean.register}" />
+
+        <p>Already have an account?<span><a href=""> Login</a></span></p>
+      </h:form>
+      <div class="right-side">
+        <p>Ready to unlock your true potential? Join us today and step into a world full of possibilities. Your journey toward growth and success starts here—sign up and make it happen!</p>
+        <img src="static/assets/auth-asset.svg" alt="" />
+      </div>
     </div>
+    
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

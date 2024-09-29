@@ -17,7 +17,8 @@ public class UserService {
     private final UserDAO userDAO = new UserDAO();
     public boolean createUser(String firstName, String lastName, String email, String password) {
         try {
-            String hashedPassword = HashUtil.createHash(password);
+            HashUtil hashUtil = new HashUtil();
+            String hashedPassword = hashUtil.hash(password);
             User newUser = new User(firstName, lastName, email, hashedPassword);
             boolean isSuccess = userDAO.addUser(newUser);
             if (!isSuccess) {
@@ -29,5 +30,17 @@ public class UserService {
         }
         
         return true;
+    }
+    
+    public User getUserByEmail(String email) {
+        User user = null;
+        try {
+            user = userDAO.getUserByEmail(email);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return user;
     }
 }

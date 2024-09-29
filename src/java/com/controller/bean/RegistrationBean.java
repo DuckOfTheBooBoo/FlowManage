@@ -55,17 +55,10 @@ public class RegistrationBean {
         boolean isSuccessful = us.createUser(firstName, lastName, email, password);
         
         if (isSuccessful) {
-            FacesContext.getCurrentInstance().addMessage(null,
-            new FacesMessage(FacesMessage.SEVERITY_INFO, "Registration Successful", "You are now registered!"));
+            return "login?faces-redirect=true";
         }
         
-//        // Reset form fields after registration (optional)
-//        firstName = "";
-//        lastName = "";
-//        email = "";
-//        password = "";
-
-        // Navigate to a success page or stay on the same page
-        return "dashboard"; // Or return null to stay on the same page
+        return null;
+        
     }
 }

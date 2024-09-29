@@ -7,7 +7,12 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/flow_manage?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;autoReconnect=TRUE&amp;allowPublicKeyRetrieval=true</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">GoodTime221</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping class="com.model.pojo.Task"/>
+    <mapping class="com.model.pojo.Priority"/>
+    <mapping class="com.model.pojo.ProjectWorkerId"/>
+    <mapping class="com.model.pojo.ProjectWorker"/>
     <mapping class="com.model.pojo.Status"/>
     <mapping class="com.model.pojo.Project"/>
     <mapping class="com.model.pojo.User"/>

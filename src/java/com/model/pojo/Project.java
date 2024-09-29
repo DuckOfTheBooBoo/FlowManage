@@ -1,10 +1,11 @@
 package com.model.pojo;
-// Generated Sep 24, 2024 1:32:00 AM by Hibernate Tools 4.3.1
+// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +13,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,31 +34,31 @@ public class Project  implements java.io.Serializable {
      private String title;
      private String overview;
      private Date deadline;
-     private Set<User> users = new HashSet<User>(0);
+     private int priority;
+     private Set<ProjectWorker> projectWorkers = new HashSet<ProjectWorker>(0);
      private Set<Task> tasks = new HashSet<Task>(0);
 
     public Project() {
     }
-
-	
-    public Project(Status status, String title, String overview, Date deadline) {
+    	
+    public Project(Status status, String title, String overview, Date deadline, int priority) {
         this.status = status;
         this.title = title;
         this.overview = overview;
         this.deadline = deadline;
+        this.priority = priority;
     }
-    public Project(Status status, String title, String overview, Date deadline, Set<User> users, Set<Task> tasks) {
+    public Project(Status status, String title, String overview, Date deadline, int priority, Set<ProjectWorker> projectWorkers, Set<Task> tasks) {
        this.status = status;
        this.title = title;
        this.overview = overview;
        this.deadline = deadline;
-       this.users = users;
+       this.priority = priority;
+       this.projectWorkers = projectWorkers;
        this.tasks = tasks;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-
-    
+    @Id @GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
@@ -69,7 +68,7 @@ public class Project  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class)
+@ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class, cascade = CascadeType.ALL)
     @JoinColumn(name="status_id", nullable=false)
     public Status getStatus() {
         return this.status;
@@ -109,19 +108,26 @@ public class Project  implements java.io.Serializable {
         this.deadline = deadline;
     }
 
-@ManyToMany(fetch=FetchType.LAZY, targetEntity = User.class)
-    @JoinTable(name="project_worker", catalog="flow_manage", joinColumns = { 
-        @JoinColumn(name="project_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="user_id", nullable=false, updatable=false) })
-    public Set<User> getUsers() {
-        return this.users;
+    
+    @Column(name="priority", nullable=false)
+    public int getPriority() {
+        return this.priority;
     }
     
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="project", targetEntity = Task.class)
+@OneToMany(fetch=FetchType.LAZY, mappedBy="project", targetEntity = ProjectWorker.class, cascade = CascadeType.ALL)
+    public Set<ProjectWorker> getProjectWorkers() {
+        return this.projectWorkers;
+    }
+    
+    public void setProjectWorkers(Set<ProjectWorker> projectWorkers) {
+        this.projectWorkers = projectWorkers;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="project", targetEntity = Task.class, cascade = CascadeType.ALL)
     public Set<Task> getTasks() {
         return this.tasks;
     }

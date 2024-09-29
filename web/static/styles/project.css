@@ -61,7 +61,7 @@ body {
     border-radius: 15px;
 }
 
-.tasks > div > a {
+.table-content > div > a {
     font-size: 1rem;
     color: #D99BFF;
     background-color: #FFF6F6;
