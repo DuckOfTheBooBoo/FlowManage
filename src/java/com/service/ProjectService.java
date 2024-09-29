@@ -5,10 +5,43 @@
  */
 package com.service;
 
+import com.dao.ProjectDAO;
+import com.dao.StatusDAO;
+import com.model.pojo.Project;
+import com.model.pojo.User;
+import com.model.pojo.Status;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  *
  * @author pc
  */
 public class ProjectService {
+    private ProjectDAO projectDAO = new ProjectDAO();
+    private StatusDAO statusDAO = new StatusDAO();
     
+    public Project addProject(String title, String description, int priority, Date deadline, User managerUser) {
+        Status onGoing = statusDAO.getStatusById(1);
+        Project newProject = new Project(onGoing, title, description, deadline, priority);
+        Project project = projectDAO.addProject(newProject, managerUser);
+        return project;
+    }
+    
+    public boolean addUserToProject(Project project, User user, String role) {
+        return projectDAO.addUserToProject(project, user, role);
+    }
+    
+    public Set<Project> getProjects(User user) {
+        Set<Project> projects = new HashSet<>();
+        projects = projectDAO.getAllProjects(user);
+        
+        return projects;
+    }
+    
+    public Project getProjectById(User user, int projectId) {
+        return projectDAO.getProjectByID(projectId, user);
+    }
 }

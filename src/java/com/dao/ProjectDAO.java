@@ -6,38 +6,53 @@
 package com.dao;
 
 import com.model.pojo.Project;
+import com.model.pojo.ProjectWorker;
+import com.model.pojo.ProjectWorkerId;
 import com.model.pojo.Task;
+import com.model.pojo.User;
 import com.util.HibernateUtil;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author pc
  */
 public class ProjectDAO {
-    public List<Project> getAllProjects() {
-        List<Project> projects = null;
+    public Set<Project> getAllProjects(User user) {
+        Set<Project> projects = null;
         Session session = HibernateUtil.getSessionFactory().openSession();  
         try {  
-            session.beginTransaction();  
-            projects = session.createCriteria(Project.class).list();  
-            int count = projects.size();
-            session.getTransaction().commit();  
+            String hql = "SELECT pw.project FROM ProjectWorker pw WHERE pw.user.id = :user_id";
+            Query qu = session.createQuery(hql);
+            qu.setParameter("user_id", user.getId());
+            
+            List<Project> tempProject = (List<Project>) qu.list();
+            projects = new HashSet<Project>(tempProject);
         } catch (Exception e) {  
-            e.printStackTrace();  
-            session.getTransaction().rollback();  
+            e.printStackTrace();
         }  
         session.close();  
         return projects;  
     }
     
-    public Project getProjectByID(int id) {
+    public Project getProjectByID(int projectId, User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Project project = null;
         try {
-            project = (Project) session.get(Project.class, id);
+            String hql = "SELECT pw.project FROM ProjectWorker pw WHERE pw.user.id = :user_id AND pw.project.id = :project_id";
+            Query qu = session.createQuery(hql);
+            qu.setParameter("user_id", user.getId());
+            qu.setParameter("project_id", projectId);
+            
+            project = (Project) qu.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,18 +66,67 @@ public class ProjectDAO {
         return taskDAO.getTasks(projectId);
     }
     
-    public void addProject(Project newProject) {
+    @SuppressWarnings("empty-statement")
+    public Project addProject(Project newProject, User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        Project createdProject = null;
+        String defaultRole = "manager";
+
         try {
-            session.beginTransaction();
+            tx = session.beginTransaction();
+
+            // Save the new project
             session.save(newProject);
-            session.beginTransaction().commit();
+            tx.commit();
+            createdProject = newProject;
         } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
             e.printStackTrace();
-            session.getTransaction().rollback();
+            createdProject = null;
+        } finally {
+            session.close();
+        }
+
+        return createdProject;
+    }
+    
+    public boolean addUserToProject(Project project, User user, String role) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        
+        try {
+            tx = session.beginTransaction();            
+            if (project == null) {
+                session.close();
+                return false;
+            }
+            
+            ProjectWorkerId pwId = new ProjectWorkerId(user.getId(), project.getId());
+            System.err.println(pwId);
+            ProjectWorker newProjectWorker = new ProjectWorker(pwId, project, user, role);
+            System.err.println(newProjectWorker);
+            
+            project.getProjectWorkers().add(newProjectWorker);
+            user.getProjectWorkers().add(newProjectWorker);
+            session.saveOrUpdate(user);
+            session.saveOrUpdate(project);
+            
+            
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            
+            e.printStackTrace();
+            return false;
         }
         
         session.close();
+        return true;
     }
     
     public void updateProject(Project updatedProject) {

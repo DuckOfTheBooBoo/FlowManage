@@ -21,7 +21,7 @@ public class TaskDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Task> tasks = null;
         try {
-            Query query = session.createQuery("FROM tasks WHERE project_id = :projectId");
+            Query query = session.createQuery("FROM task WHERE project_id = :projectId");
             query.setParameter("projectId", projectId);
             tasks = query.list();
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class TaskDAO {
         return tasks;
     }
     
-    public void addTask(Task newTask) {
+    public boolean addTask(Task newTask) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         
@@ -44,7 +44,10 @@ public class TaskDAO {
                 tx.rollback();
             }
             e.printStackTrace();
+            return false;
         }
+        
+        return true;
     }
     
     public void deleteTask(Task targetTask) {

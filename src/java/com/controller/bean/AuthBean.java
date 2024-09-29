@@ -5,10 +5,16 @@
  */
 package com.controller.bean;
 
+import com.model.pojo.User;
 import com.service.AuthService;
+import java.io.Serializable;
+import java.util.Iterator;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIMessage;
 import javax.faces.context.FacesContext;
 
 /**
@@ -16,38 +22,70 @@ import javax.faces.context.FacesContext;
  * @author pc
  */
 @Named(value = "authBean")
-@Dependent
-public class AuthBean {
-    
+@SessionScoped
+public class AuthBean implements Serializable {
+
     private String email;
     private String password;
-    /**
-     * Creates a new instance of AuthBean
-     */
-    public AuthBean() {
-    }
-    
+    private User loggedInUser;
+
+    private AuthService authService = new AuthService();
+
     public String getEmail() {
-        return this.email;
+        return email;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public String getPassword(String password) {
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public String login() {
-        AuthService as = new AuthService();
-        boolean isSuccess = as.login(email, password);
-        
-        if (isSuccess) {
-            FacesContext.getCurrentInstance().addMessage(null,
-            new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Successful", "You are now logged in!"));
+        // Validate user credentials
+        if (email == null || email.isEmpty()) {
+            FacesMessage message = new FacesMessage("Email is required");
+            FacesContext.getCurrentInstance().addMessage("form:email", message);
+            return null;
+        }
+
+        if (password == null || password.isEmpty()) {
+            FacesMessage message = new FacesMessage("Password is required");
+            FacesContext.getCurrentInstance().addMessage("form:password", message);
+            return null;
         }
         
-        return "dashboard";
+        loggedInUser = authService.authenticate(email, password);
+        
+        if (loggedInUser != null) {
+            // Successful login, redirect to the dashboard
+            return "dashboard?faces-redirect=true";
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials", null);
+            FacesContext.getCurrentInstance().addMessage("form:password", msg);
+            UIComponent msgUI = FacesContext.getCurrentInstance().getViewRoot().findComponent("email");
+            
+            return null;
+        }
+    }
+
+    public String logout() {
+        // Invalidate session
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "login?faces-redirect=true";
+    }
+
+    public boolean isLoggedIn() {
+        return loggedInUser != null;
     }
 }

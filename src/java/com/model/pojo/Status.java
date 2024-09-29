@@ -1,5 +1,5 @@
 package com.model.pojo;
-// Generated Sep 24, 2024 1:32:00 AM by Hibernate Tools 4.3.1
+// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -63,7 +63,7 @@ public class Status  implements java.io.Serializable {
         this.status = status;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="status", targetEntity = Project.class)
+@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
     public Set<Project> getProjects() {
         return this.projects;
     }
@@ -72,7 +72,7 @@ public class Status  implements java.io.Serializable {
         this.projects = projects;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="status", targetEntity = Task.class)
+@OneToMany(fetch=FetchType.LAZY, mappedBy="status")
     public Set<Task> getTasks() {
         return this.tasks;
     }
