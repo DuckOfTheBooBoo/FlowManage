@@ -22,7 +22,7 @@
     </h:head>
     <h:body>
     <div class="container d-flex flex-row">
-      <h:form class="form">
+      <h:form class="form" id="login-form">
         <h3>Welcome Back!</h3>
         <div class="mb-3">
           <label for="email" class="form-label">E-mail</label>
@@ -50,7 +50,12 @@
           <h:message for="password" class="text-danger" />
         </div>
         <h:commandButton value="Login" class="btn" action="#{authBean.login}" />
-
+        <h:message for="login-form" styleClass="text-danger" />
+        <p>Create a new account?<span>
+                <h:form>
+                    <h:link outcome="/register.xhtml" value="Register" />
+                </h:form>
+            </span></p>
       </h:form>
       <div class="right-side">
         <p>Ready to unlock your true potential? Join us today and step into a world full of possibilities. Your journey toward growth and success starts here—sign up and make it happen!</p>

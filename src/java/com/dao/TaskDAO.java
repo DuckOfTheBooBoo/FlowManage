@@ -6,7 +6,10 @@
 package com.dao;
 import com.model.pojo.Task;
 import com.util.HibernateUtil;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,6 +34,18 @@ public class TaskDAO {
         return tasks;
     }
     
+    public Task getTaskById(Integer id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Task task = null;
+        try {
+            task = (Task) session.get(Task.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return task;
+    }
+    
     public boolean addTask(Task newTask) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -50,7 +65,26 @@ public class TaskDAO {
         return true;
     }
     
-    public void deleteTask(Task targetTask) {
+    public boolean updateTask(Task task) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        
+        try {
+            tx = session.beginTransaction();
+            session.update(task);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean deleteTask(Task targetTask) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         
@@ -63,6 +97,9 @@ public class TaskDAO {
                 tx.rollback();
             }
             e.printStackTrace();
+            return false;
         }
+        
+        return true;
     }
 }

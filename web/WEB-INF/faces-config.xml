@@ -4,33 +4,25 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     
-<!--    <managed-bean>
-        <managed-bean-name>authBean></managed-bean-name>
-        <managed-bean-class>com.controller.bean.AuthBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <managed-bean>
-        <managed-bean-name>projectBean></managed-bean-name>
-        <managed-bean-class>com.controller.bean.ProjectBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>-->
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>dashboard</from-outcome>
+            <to-view-id>/dashboard.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     <navigation-rule>
-    <from-view-id>/login.xhtml</from-view-id>
-    <navigation-case>
-        <from-outcome>dashboard</from-outcome>
-        <to-view-id>/dashboard.xhtml</to-view-id>
-        <redirect />
-    </navigation-case>
-</navigation-rule>
-
-<navigation-rule>
-    <from-view-id>/dashboard.xhtml</from-view-id>
-    <navigation-case>
-        <from-outcome>login</from-outcome>
-        <to-view-id>/login.xhtml</to-view-id>
-        <redirect />
-    </navigation-case>
-</navigation-rule>
+        
+    </navigation-rule>
 </faces-config>

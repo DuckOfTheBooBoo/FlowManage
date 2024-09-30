@@ -1,5 +1,5 @@
 package com.model.pojo;
-// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
+// Generated Sep 30, 2024 4:01:08 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,32 +27,29 @@ public class Task  implements java.io.Serializable {
 
 
      private int id;
-     private Project project;
+     private ProjectWorker projectWorker;
      private Status status;
-     private User user;
      private String title;
+     private String description;
      private int priority;
      private Date deadline;
-     private String description;
 
     public Task() {
     }
 
-    public Task(int id, Project project, Status status, User user, String title, String description, int priority, Date deadline) {
-       this.id = id;
-       this.project = project;
+    public Task(ProjectWorker projectWorker, Status status, String title, String description, int priority, Date deadline) {
+       this.projectWorker = projectWorker;
        this.status = status;
-       this.user = user;
        this.title = title;
        this.description = description;
        this.priority = priority;
        this.deadline = deadline;
     }
     
-    public Task(Project project, Status status, User user, String title, String description, int priority, Date deadline) {
-       this.project = project;
+    public Task(int id, ProjectWorker projectWorker, Status status, String title, String description, int priority, Date deadline) {
+       this.id = id;
+       this.projectWorker = projectWorker;
        this.status = status;
-       this.user = user;
        this.title = title;
        this.description = description;
        this.priority = priority;
@@ -68,17 +66,19 @@ public class Task  implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = Project.class)
-    @JoinColumn(name="project_id", nullable=false)
-    public Project getProject() {
-        return this.project;
+@ManyToOne(fetch=FetchType.LAZY, targetEntity = ProjectWorker.class)
+    @JoinColumns( { 
+        @JoinColumn(name="user_id", referencedColumnName="user_id", nullable=false, insertable=true, updatable=false), 
+        @JoinColumn(name="project_id", referencedColumnName="project_id", nullable=false, insertable=true, updatable=false) } )
+    public ProjectWorker getProjectWorker() {
+        return this.projectWorker;
     }
     
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectWorker(ProjectWorker projectWorker) {
+        this.projectWorker = projectWorker;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class)
+@ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class)
     @JoinColumn(name="status_id", nullable=false)
     public Status getStatus() {
         return this.status;
@@ -86,16 +86,6 @@ public class Task  implements java.io.Serializable {
     
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = User.class)
-    @JoinColumn(name="user_id", nullable=false)
-    public User getUser() {
-        return this.user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
     }
 
     
@@ -107,15 +97,7 @@ public class Task  implements java.io.Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    @Column(name="description", nullable=true, length=65535)
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
     
     @Column(name="priority", nullable=false)
     public int getPriority() {
@@ -135,10 +117,15 @@ public class Task  implements java.io.Serializable {
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
+    
+    @Column(name="description", nullable=true)
+    public String getDescription() {
+        return description;
+    }
 
-
-
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
 
 

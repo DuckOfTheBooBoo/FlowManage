@@ -14,6 +14,7 @@ import com.util.HibernateUtil;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -129,21 +130,61 @@ public class ProjectDAO {
         return true;
     }
     
-    public void updateProject(Project updatedProject) {
+    public boolean updateUserInProject(ProjectWorker pw) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        
+        try {
+            tx = session.beginTransaction();
+            session.update(pw);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean deleteUserFromProject(ProjectWorker pw) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        
+        try {
+            tx = session.beginTransaction();
+            session.delete(pw);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean updateProject(Project updatedProject) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.update(updatedProject);
-            session.beginTransaction().commit();
+            session.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
         }
         
         session.close();
+        return false;
     }
     
-    public void deleteProject(Project targetProject) {
+    public boolean deleteProject(Project targetProject) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -157,7 +198,9 @@ public class ProjectDAO {
             if (tx != null) {
                 tx.rollback();
             }
+            return false;
         }
         session.close();
+        return true;
     }
 }

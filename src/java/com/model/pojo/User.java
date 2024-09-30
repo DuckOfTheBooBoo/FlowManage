@@ -1,5 +1,5 @@
 package com.model.pojo;
-// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
+// Generated Sep 30, 2024 4:01:08 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -32,39 +32,35 @@ public class User  implements java.io.Serializable {
      private String lastName;
      private String email;
      private String password;
-     private Set<User> usersForUserIdB = new HashSet<User>(0);
      private Set<ProjectWorker> projectWorkers = new HashSet<ProjectWorker>(0);
-     private Set<Task> tasks = new HashSet<Task>(0);
-     private Set<User> usersForUserIdA = new HashSet<User>(0);
 
     public User() {
     }
 
-	
+    
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    } 
+    
     public User(String firstName, String email, String password) {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
     }
-    
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.email = email;
-        this.password = password;
-    }
-    
-    public User(String firstName, String lastName, String email, String password, Set<User> usersForUserIdB, Set<ProjectWorker> projectWorkers, Set<Task> tasks, Set<User> usersForUserIdA) {
+    public User(String firstName, String lastName, String email, String password, Set<ProjectWorker> projectWorkers) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.email = email;
        this.password = password;
-       this.usersForUserIdB = usersForUserIdB;
        this.projectWorkers = projectWorkers;
-       this.tasks = tasks;
-       this.usersForUserIdA = usersForUserIdA;
     }
    
-    @Id @GeneratedValue(strategy=IDENTITY)
+     @Id @GeneratedValue(strategy=IDENTITY)
+
+    
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
@@ -114,19 +110,7 @@ public class User  implements java.io.Serializable {
         this.password = password;
     }
 
-    @ManyToMany(fetch=FetchType.LAZY, targetEntity = User.class)
-    @JoinTable(name="contact", catalog="flow_manage", joinColumns = { 
-        @JoinColumn(name="user_id_a", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="user_id_b", nullable=false, updatable=false) })
-    public Set<User> getUsersForUserIdB() {
-        return this.usersForUserIdB;
-    }
-    
-    public void setUsersForUserIdB(Set<User> usersForUserIdB) {
-        this.usersForUserIdB = usersForUserIdB;
-    }
-
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="user", targetEntity = ProjectWorker.class, cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="user", targetEntity = ProjectWorker.class, cascade = CascadeType.ALL)
     public Set<ProjectWorker> getProjectWorkers() {
         return this.projectWorkers;
     }
@@ -135,24 +119,6 @@ public class User  implements java.io.Serializable {
         this.projectWorkers = projectWorkers;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="user", targetEntity = Task.class, cascade = CascadeType.ALL)
-    public Set<Task> getTasks() {
-        return this.tasks;
-    }
-    
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    @ManyToMany(fetch=FetchType.LAZY, targetEntity = User.class)
-    @JoinTable(name="contact", catalog="flow_manage", joinColumns = { 
-        @JoinColumn(name="user_id_b", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="user_id_a", nullable=false, updatable=false) })
-    public Set<User> getUsersForUserIdA() {
-        return this.usersForUserIdA;
-    }
-    
-    public void setUsersForUserIdA(Set<User> usersForUserIdA) {
-        this.usersForUserIdA = usersForUserIdA;
-    }
 }
+
+

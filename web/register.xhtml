@@ -35,7 +35,7 @@
               <f:validateRequired />
               <f:validateLength minimum="1" />
           </h:inputText>
-          <h:message for="firstName" class="text-danger" />
+          <h:messages for="firstName" class="text-danger"  />
         </div>
         <div class="mb-3">
           <label for="lastName" class="form-label">Last Name</label>
@@ -45,7 +45,6 @@
             pt:placeholder="Enter your last name"
             value="#{registrationBean.lastName}"
               >
-              <f:validateLength minimum="1" />
           </h:inputText>
           <h:message for="lastName" class="text-danger" />
         </div>
@@ -75,7 +74,11 @@
         </div>
         <h:commandButton value="Get Started" class="btn" action="#{registrationBean.register}" />
 
-        <p>Already have an account?<span><a href=""> Login</a></span></p>
+        <p>Already have an account?<span>
+                <h:form>
+                    <h:link outcome="/login.xhtml" value="Login" />
+                </h:form>
+            </span></p>
       </h:form>
       <div class="right-side">
         <p>Ready to unlock your true potential? Join us today and step into a world full of possibilities. Your journey toward growth and success starts here—sign up and make it happen!</p>

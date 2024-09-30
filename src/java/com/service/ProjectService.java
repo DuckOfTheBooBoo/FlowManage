@@ -8,6 +8,7 @@ package com.service;
 import com.dao.ProjectDAO;
 import com.dao.StatusDAO;
 import com.model.pojo.Project;
+import com.model.pojo.ProjectWorker;
 import com.model.pojo.User;
 import com.model.pojo.Status;
 import java.util.Date;
@@ -33,6 +34,10 @@ public class ProjectService {
     public boolean addUserToProject(Project project, User user, String role) {
         return projectDAO.addUserToProject(project, user, role);
     }
+
+    public boolean updateProject(Project project) {
+        return projectDAO.updateProject(project);
+    }
     
     public Set<Project> getProjects(User user) {
         Set<Project> projects = new HashSet<>();
@@ -43,5 +48,14 @@ public class ProjectService {
     
     public Project getProjectById(User user, int projectId) {
         return projectDAO.getProjectByID(projectId, user);
+    }
+    
+    public boolean deleteUserFromProject(ProjectWorker pw) {
+        return projectDAO.deleteUserFromProject(pw);
+    }
+    
+    public boolean deleteProject(User user, Integer projectId) {
+        Project targetProject = getProjectById(user, projectId);
+        return projectDAO.deleteProject(targetProject);
     }
 }

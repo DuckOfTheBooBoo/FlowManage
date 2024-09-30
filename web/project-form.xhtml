@@ -24,6 +24,11 @@
         <title>New Project</title>
     </h:head>
     <h:body>
+        <f:metadata>
+            <f:viewParam name="project_id" value="#{projectBean.projectId}"/>
+            <f:event type="preRenderView" listener="#{projectBean.init}" />
+        </f:metadata>
+        
         <div class="side-navigation d-flex flex-column">
             <a href="" class="d-block"><i class="bi bi-flower1"></i></a>
 
@@ -37,19 +42,19 @@
                         <f:param name="page" value="projects"/>
                         <i class="d-block bi bi-file-earmark-text-fill"></i>
                     </h:commandLink>
-                    <h:commandLink action="#{navigationBean.showPage}">
-                        <f:param name="page" value="contacts"/>
-                        <i class="d-block bi bi-people-fill"></i>
-                    </h:commandLink>
                 </h:form>
             </div>
-            <a href="" class="d-block"><i class="bi bi-box-arrow-right"></i></a>
+            <h:form>
+                <h:commandLink styleClass="d-block" action="#{authBean.logout}">
+                    <i class="bi bi-box-arrow-right"></i>
+                </h:commandLink>
+            </h:form>
         </div>
 
     <!-- MAIN BODY -->
     <div class="projects">
       <div class="main">
-        <h3>New Project</h3>
+          <h3>#{projectBean.projectId != null ? 'Edit Project' : 'New Project'}</h3>
         <h:form>
           <div class="mb-3">
             <label for="projectTitle" class="form-label">Title</label>
@@ -96,7 +101,14 @@
               </h:inputText>
               <h:message for="projectDeadline" style="color:red"/>
             </div>
-          <h:commandButton value="Save" class="btn" action="#{projectBean.saveProject}" />
+            <div class="mb-3">
+                <label for="projectStatus">Status: <br/></label>
+              <h:selectOneMenu value="#{projectBean.statusId}" id="projectStatus" rendered="#{projectBean.projectId != null}">
+                  <f:selectItems var="status" value="#{projectBean.statusList}" itemLabel="#{status.status}" itemValue="#{status.id}" /> 
+              </h:selectOneMenu>
+              <h:message for="projectStatus" style="color:red"/>
+            </div>
+            <h:commandButton value="Save" class="btn" action="#{projectBean.saveProject(projectBean.projectId)}" />
         </h:form>
       </div>
     </div>

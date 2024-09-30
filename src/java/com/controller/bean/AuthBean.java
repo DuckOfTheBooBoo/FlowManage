@@ -71,10 +71,7 @@ public class AuthBean implements Serializable {
             // Successful login, redirect to the dashboard
             return "dashboard?faces-redirect=true";
         } else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials", null);
-            FacesContext.getCurrentInstance().addMessage("form:password", msg);
-            UIComponent msgUI = FacesContext.getCurrentInstance().getViewRoot().findComponent("email");
-            
+            FacesContext.getCurrentInstance().addMessage("login-form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials.", null));
             return null;
         }
     }

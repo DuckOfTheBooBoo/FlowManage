@@ -27,8 +27,22 @@ public class NavigationBean {
     @ManagedProperty(value = "#{param.page}")
     private String page;
     
-    @ManagedProperty(value = "#{param.projectId}")
-    private Long projectId;
+    @ManagedProperty(value = "#{param.project_id}")
+    private Integer projectId;
+    
+    @ManagedProperty(value = "#{param.task_id}")
+    private Integer taskId;
+    
+    @ManagedProperty(value = "#{param.state}")
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
     
     public String getPage() {
         return this.page;
@@ -38,16 +52,23 @@ public class NavigationBean {
         this.page = page;
     }
 
-    public Long getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
+    }
+
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
     
     public String showPage() {
-        System.err.println(page);
         if(page == null) {
             return "dashboard?faces-redirect=true";
         }
@@ -74,6 +95,10 @@ public class NavigationBean {
         
         if("task-form".equals(page)) {
             return "task-form?faces-redirect=true&amp;includeViewParams=true";
+        }
+        
+        if("login".equals(page)) {
+            return "login?faces-redirect=true";
         }
         
         return null;

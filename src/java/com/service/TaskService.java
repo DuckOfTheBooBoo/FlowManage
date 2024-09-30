@@ -8,6 +8,7 @@ package com.service;
 import com.dao.StatusDAO;
 import com.dao.TaskDAO;
 import com.model.pojo.Project;
+import com.model.pojo.ProjectWorker;
 import com.model.pojo.Status;
 import com.model.pojo.Task;
 import com.model.pojo.User;
@@ -23,7 +24,33 @@ public class TaskService {
     
     public boolean addNewTask(User user, Project project, String title, String description, Date deadline, int priority) {
         Status onGoingStat = statusDAO.getStatusById(1);
-        Task newTask = new Task(project, onGoingStat, user, title, description, priority, deadline);
+        ProjectWorker pw = user.getProjectWorkers().stream().filter(pws -> pws.getProject().getId() == project.getId() && pws.getUser().getId() == user.getId()).findFirst().orElse(null);
+        Task newTask = new Task(pw, onGoingStat, title, description, priority, deadline);
         return taskDAO.addTask(newTask);
+    }
+    
+    public boolean saveTask(Integer taskId, User user, Project project, String title, String description, Date deadline, int priority) {
+        Status onGoingStat = statusDAO.getStatusById(1);
+        ProjectWorker pw = user.getProjectWorkers().stream().filter(pws -> pws.getProject().getId() == project.getId()).findFirst().orElse(null);
+        Task currentTask = new Task(taskId, pw, onGoingStat, title, description, priority, deadline);
+        return taskDAO.updateTask(currentTask);
+    }
+    
+    public Task getTaskById(Integer taskId) {
+        return taskDAO.getTaskById(taskId);
+    }
+    
+    public boolean updateTask(Task updatedTask) {
+        return taskDAO.updateTask(updatedTask);
+    }
+    
+    public boolean completeTask(Task updatedTask) {
+        Status doneStat = statusDAO.getStatusById(2);
+        updatedTask.setStatus(doneStat);
+        return taskDAO.updateTask(updatedTask);
+    }
+    
+    public boolean deleteTask(Task targetTask) {
+        return taskDAO.deleteTask(targetTask);
     }
 }

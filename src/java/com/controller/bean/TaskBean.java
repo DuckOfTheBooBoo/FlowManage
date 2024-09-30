@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import com.model.pojo.Project;
 import com.model.pojo.ProjectWorker;
+import com.model.pojo.Task;
 import com.model.pojo.User;
 import com.service.ProjectService;
 import com.service.TaskService;
@@ -35,6 +36,8 @@ public class TaskBean implements java.io.Serializable {
 
     private Project project;
     private Integer projectId;
+    private Integer taskId;
+    private Task task;
     private String taskTitle;
     private String taskDescription;
     private Date deadline;
@@ -65,8 +68,35 @@ public class TaskBean implements java.io.Serializable {
         if (projectId != null) {
             this.project = ps.getProjectById(authbean.getLoggedInUser(), projectId);
         }
+        
+        if (taskId != null) {
+            this.task = ts.getTaskById(taskId);
+            taskTitle = this.task.getTitle();
+            taskDescription = this.task.getDescription();
+            deadline = this.task.getDeadline();
+            priority = this.task.getPriority();
+            this.assigneeId = this.task.getProjectWorker().getUser().getId();
+        }
     }
 
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    
+    
     public Project getProject() {
         return project;
     }
@@ -148,17 +178,34 @@ public class TaskBean implements java.io.Serializable {
     }
     
     public String addNewTask() {
+        if(taskId != null) {
+            return saveTask();
+        }
+        
         FacesContext ctx = FacesContext.getCurrentInstance();
         
         User assignee = getProjectUsers().stream().filter(u -> Objects.equals(u.getId(), assigneeId)).findFirst().orElse(null);
         
-        if (assignee != null || assignee.getId() != null) {
-            boolean isSuccessful = ts.addNewTask(assignee, project, taskTitle, taskTitle, deadline, priority);
+        if (assignee != null && assignee.getId() != null) {
+            boolean isSuccessful = ts.addNewTask(assignee, project, taskTitle, taskDescription, deadline, priority);
             if (isSuccessful) {
                 return "project?faces-redirect=true&amp;project_id="+projectId;
             }
-            
-            
+        }
+        
+        ctx.addMessage("task-form", new FacesMessage("Failed to add new task"));
+        return null;
+    }
+    
+    public String saveTask() {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        User assignee = getProjectUsers().stream().filter(u -> Objects.equals(u.getId(), assigneeId)).findFirst().orElse(null);
+        
+        if (assignee != null || assignee.getId() != null) {
+            boolean isSuccessful = ts.saveTask(taskId, assignee, project, taskTitle, taskDescription, deadline, priority);
+            if (isSuccessful) {
+                return "project?faces-redirect=true&amp;project_id="+projectId;
+            }
         }
         
         ctx.addMessage("task-form", new FacesMessage("Failed to add new task"));
@@ -166,11 +213,11 @@ public class TaskBean implements java.io.Serializable {
     }
     
     public List<User> getProjectUsers() {
-        Set<ProjectWorker> pw = project.getProjectWorkers();
+        Set<ProjectWorker> pw = this.project.getProjectWorkers();
         List<User> workers = new ArrayList<>();
-        for (ProjectWorker worker : pw) {
+        pw.stream().forEach((worker) -> {
             workers.add(worker.getUser());
-        }
+        });
         
         return workers;
     }

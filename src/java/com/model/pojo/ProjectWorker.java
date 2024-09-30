@@ -1,15 +1,19 @@
 package com.model.pojo;
-// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
+// Generated Sep 30, 2024 4:01:08 PM by Hibernate Tools 4.3.1
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,15 +30,24 @@ public class ProjectWorker  implements java.io.Serializable {
      private Project project;
      private User user;
      private String role;
+     private Set<Task> tasks = new HashSet<Task>(0);
 
     public ProjectWorker() {
     }
 
+	
     public ProjectWorker(ProjectWorkerId id, Project project, User user, String role) {
+        this.id = id;
+        this.project = project;
+        this.user = user;
+        this.role = role;
+    }
+    public ProjectWorker(ProjectWorkerId id, Project project, User user, String role, Set<Task> tasks) {
        this.id = id;
        this.project = project;
        this.user = user;
        this.role = role;
+       this.tasks = tasks;
     }
    
      @EmbeddedId
@@ -79,6 +92,15 @@ public class ProjectWorker  implements java.io.Serializable {
     
     public void setRole(String role) {
         this.role = role;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="projectWorker", targetEntity = Task.class, cascade = CascadeType.ALL)
+    public Set<Task> getTasks() {
+        return this.tasks;
+    }
+    
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
 

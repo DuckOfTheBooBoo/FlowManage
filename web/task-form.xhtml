@@ -25,6 +25,7 @@
     <h:body>
         <f:metadata>
             <f:viewParam name="project_id" value="#{taskBean.projectId}" />
+            <f:viewParam name="task_id" value="#{taskBean.taskId}" />
             <f:event type="preRenderView" listener="#{taskBean.init}" />
         </f:metadata>
         
@@ -43,23 +44,21 @@
                         <f:param name="page" value="projects"/>
                         <i class="d-block bi bi-file-earmark-text-fill"></i>
                     </h:commandLink>
-                    <h:commandLink action="#{navigationBean.showPage}">
-                        <f:param name="page" value="contacts"/>
-                        <i class="d-block bi bi-people-fill"></i>
-                    </h:commandLink>
                 </h:form>
             </div>
 
-            <a href="" class="d-block">
-                <i class="bi bi-box-arrow-right"></i>
-            </a>
+            <h:form>
+                <h:commandLink styleClass="d-block" action="#{authBean.logout}">
+                    <i class="bi bi-box-arrow-right"></i>
+                </h:commandLink>
+            </h:form>
         </div>
 
       <!-- MAIN BODY -->
       <h:form id="task-form">
         <div class="main-body">
           <div class="main">
-            <h3>New task for [Project Name]</h3>
+              <h3>#{taskBean.taskId == null ? 'New task' : 'Edit task'}</h3>
             <div class="mb-3" id="title-field">
               <label for="taskTitle" class="form-label fs-4 fw-semibold"
                 >Title of Task</label
@@ -120,7 +119,7 @@
             </div>
           </div>
           <div class="attribute-action">
-              <h:commandButton value="Submit" styleClass="btn submit-btn" id="submit-btn" action="#{taskBean.addNewTask}"/>
+              <h:commandButton value="#{taskBean.taskId == null ? 'Submit' : 'Save'}" styleClass="btn submit-btn" id="submit-btn" action="#{taskBean.addNewTask}"/>
             <button id="cancel-btn" type="" class="btn fw-semibold">Cancel</button>
             <button id="reset-btn" type="" class="btn fw-semibold text-danger">Reset</button>
           </div>

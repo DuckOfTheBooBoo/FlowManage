@@ -23,17 +23,17 @@
                         <f:param name="page" value="projects"/>
                         <i class="d-block bi bi-file-earmark-text-fill"></i>
                     </h:commandLink>
-                    <h:commandLink action="#{navigationBean.showPage}">
-                        <f:param name="page" value="contacts"/>
-                        <i class="d-block bi bi-people-fill"></i>
-                    </h:commandLink>
                 </h:form>
             </div>
-            <a href="" class="d-block"><i class="bi bi-box-arrow-right"></i></a>
+            <h:form>
+                <h:commandLink styleClass="d-block" action="#{authBean.logout}">
+                    <i class="bi bi-box-arrow-right"></i>
+                </h:commandLink>
+            </h:form>
         </div>
 
         <!-- MAIN BODY -->
-        <div class="projects">
+        <div class="projects overflow-auto">
             <!-- TOP NAVBAR -->
             <div class="d-flex flex-column">
 
@@ -47,7 +47,8 @@
                 </div>
 
                 <div class="main">
-                    <h:dataTable value="#{projectBean.projectList}" var="project" styleClass="table table-borderless table-hover">
+                    <h:form>
+                    <h:dataTable value="#{utilBean.sortProjectPriority(projectBean.projectList)}" var="project" styleClass="table table-borderless table-hover">
                         <h:column>
                             <f:facet name="header">ID</f:facet>
                             #{project.id}
@@ -57,18 +58,35 @@
                             #{project.title}
                         </h:column>
                         <h:column>
+                            <f:facet name="header">Priority</f:facet>
+                            <h:outputText styleClass="badge bg-success" value="Low" rendered="#{project.priority == 1}" />
+                            <h:outputText styleClass="badge bg-warning" value="Medium" rendered="#{project.priority == 2}" />
+                            <h:outputText styleClass="badge bg-danger" value="High" rendered="#{project.priority == 3}" />
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">Deadline</f:facet>
                             #{project.deadline}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Status</f:facet>
-                            #{project.status}
+                            <h:outputText styleClass="badge #{project.status.id == 1 ? 'bg-warning' : 'bg-success'}" value="#{project.status.status}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Action</f:facet>
-                            <button class="btn btn-sm">View</button>
+                            <h:panelGroup layout="block" class="d-flex gap-3">
+                                <h:link styleClass="btn btn-sm btn-success" outcome="/project.xhtml" value="View">
+                                    <f:param name="project_id" value="#{project.id}" />
+                                </h:link>
+                                <h:link styleClass="btn btn-sm btn-primary" outcome="/project-form.xhtml" value="Edit" rendered="#{projectBean.isAuthorized(project)}">
+                                    <f:param name="project_id" value="#{project.id}" />
+                                </h:link>
+                                <h:commandButton styleClass="btn btn-sm btn-danger" action="#{projectBean.deleteProject(project.id)}" value="Delete" rendered="#{projectBean.isAuthorized(project)}">
+                                    <f:ajax execute="@form" render="@form" />
+                                </h:commandButton>
+                            </h:panelGroup>
                         </h:column>
                     </h:dataTable>
+                    </h:form>
                 </div>
             </div>
         </div>

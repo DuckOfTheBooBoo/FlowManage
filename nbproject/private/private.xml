@@ -3,22 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/model/pojo/Task.java</file>
+            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/util/HibernateUtil.java</file>
             <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/dao/ProjectDAO.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/model/pojo/User.java</file>
             <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/service/ProjectService.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/service/UserService.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/controller/bean/UtilBean.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/controller/bean/ViewProjectBean.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/web/dashboard.xhtml</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/web/static/styles/dashboard.css</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/controller/bean/NavigationBean.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/model/pojo/Project.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/model/pojo/ProjectWorker.java</file>
             <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/controller/bean/ProjectBean.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/hibernate.reveng.xml</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/web/project.xhtml</file>
+            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/web/project-form.xhtml</file>
         </group>
     </open-files>
 </project-private>

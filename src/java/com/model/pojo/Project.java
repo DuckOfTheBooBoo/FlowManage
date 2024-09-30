@@ -1,5 +1,5 @@
 package com.model.pojo;
-// Generated Sep 28, 2024 1:16:40 PM by Hibernate Tools 4.3.1
+// Generated Sep 30, 2024 4:01:08 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -36,11 +36,11 @@ public class Project  implements java.io.Serializable {
      private Date deadline;
      private int priority;
      private Set<ProjectWorker> projectWorkers = new HashSet<ProjectWorker>(0);
-     private Set<Task> tasks = new HashSet<Task>(0);
 
     public Project() {
     }
-    	
+
+	
     public Project(Status status, String title, String overview, Date deadline, int priority) {
         this.status = status;
         this.title = title;
@@ -48,17 +48,18 @@ public class Project  implements java.io.Serializable {
         this.deadline = deadline;
         this.priority = priority;
     }
-    public Project(Status status, String title, String overview, Date deadline, int priority, Set<ProjectWorker> projectWorkers, Set<Task> tasks) {
+    public Project(Status status, String title, String overview, Date deadline, int priority, Set<ProjectWorker> projectWorkers) {
        this.status = status;
        this.title = title;
        this.overview = overview;
        this.deadline = deadline;
        this.priority = priority;
        this.projectWorkers = projectWorkers;
-       this.tasks = tasks;
     }
    
-    @Id @GeneratedValue(strategy=IDENTITY)
+     @Id @GeneratedValue(strategy=IDENTITY)
+
+    
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
@@ -68,7 +69,7 @@ public class Project  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class, cascade = CascadeType.ALL)
+@ManyToOne(fetch=FetchType.LAZY, targetEntity = Status.class)
     @JoinColumn(name="status_id", nullable=false)
     public Status getStatus() {
         return this.status;
@@ -126,19 +127,7 @@ public class Project  implements java.io.Serializable {
     public void setProjectWorkers(Set<ProjectWorker> projectWorkers) {
         this.projectWorkers = projectWorkers;
     }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="project", targetEntity = Task.class, cascade = CascadeType.ALL)
-    public Set<Task> getTasks() {
-        return this.tasks;
-    }
     
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-
-
-
 }
 
 
