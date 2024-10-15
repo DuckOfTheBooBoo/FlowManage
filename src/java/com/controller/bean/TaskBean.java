@@ -184,6 +184,12 @@ public class TaskBean implements java.io.Serializable {
         
         FacesContext ctx = FacesContext.getCurrentInstance();
         
+        Date currentDate = new Date();
+        if(!deadline.after(currentDate)) {
+            ctx.addMessage("projectDeadline", new FacesMessage("Deadline must be in the future"));
+            return null;
+        }
+        
         User assignee = getProjectUsers().stream().filter(u -> Objects.equals(u.getId(), assigneeId)).findFirst().orElse(null);
         
         if (assignee != null && assignee.getId() != null) {
@@ -199,8 +205,13 @@ public class TaskBean implements java.io.Serializable {
     
     public String saveTask() {
         FacesContext ctx = FacesContext.getCurrentInstance();
-        User assignee = getProjectUsers().stream().filter(u -> Objects.equals(u.getId(), assigneeId)).findFirst().orElse(null);
-        
+        User assignee = null;
+        for (User user : getProjectUsers()) {            
+            if (user.getId() == assigneeId) {
+                assignee = user;
+                break;
+            }
+        }
         if (assignee != null || assignee.getId() != null) {
             boolean isSuccessful = ts.saveTask(taskId, assignee, project, taskTitle, taskDescription, deadline, priority);
             if (isSuccessful) {

@@ -95,39 +95,33 @@ public class ProjectDAO {
     }
     
     public boolean addUserToProject(Project project, User user, String role) {
+        if (project == null) {
+            return false;
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        
         try {
-            tx = session.beginTransaction();            
-            if (project == null) {
-                session.close();
-                return false;
-            }
-            
+            tx = session.beginTransaction();
+
             ProjectWorkerId pwId = new ProjectWorkerId(user.getId(), project.getId());
             System.err.println(pwId);
             ProjectWorker newProjectWorker = new ProjectWorker(pwId, project, user, role);
             System.err.println(newProjectWorker);
-            
+
             project.getProjectWorkers().add(newProjectWorker);
             user.getProjectWorkers().add(newProjectWorker);
-            session.saveOrUpdate(user);
+//            session.saveOrUpdate(user);
             session.saveOrUpdate(project);
-            
-            
+
             tx.commit();
+            return true;
         } catch (Exception e) {
-            if (tx != null) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            
             e.printStackTrace();
             return false;
         }
-        
-        session.close();
-        return true;
     }
     
     public boolean updateUserInProject(ProjectWorker pw) {
@@ -186,6 +180,7 @@ public class ProjectDAO {
     
     public boolean deleteProject(Project targetProject) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        boolean isSuccessful = false;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -193,14 +188,16 @@ public class ProjectDAO {
             session.delete(targetProject);
             
             tx.commit();
+            isSuccessful = true;
         } catch (Exception e) {
             e.printStackTrace();
             if (tx != null) {
                 tx.rollback();
             }
-            return false;
+            isSuccessful = false;
+        } finally {
+            session.close();
         }
-        session.close();
-        return true;
+        return isSuccessful;
     }
 }

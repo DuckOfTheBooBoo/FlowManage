@@ -91,6 +91,7 @@
     <h:body>
         <f:metadata>
             <f:viewParam name="project_id" value="#{contactBean.projectId}" />
+            <f:viewParam name="user_id" value="#{contactBean.userId}" />
             <f:event type="preRenderView" listener="#{contactBean.init}" />
         </f:metadata>
         

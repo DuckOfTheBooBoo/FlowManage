@@ -29,6 +29,31 @@ body {
     opacity: 100%;
 }
 
+.side-navigation {
+	width: 110px;
+	height: 100dvh;
+	background-color: #fed9ed;
+	justify-content: space-around;
+	box-shadow: 143px 0px 40px 0px rgba(0, 0, 0, 0),
+		92px 0px 37px 0px rgba(0, 0, 0, 0.01), 52px 0px 31px 0px rgba(0, 0, 0, 0.05),
+		23px 0px 23px 0px rgba(0, 0, 0, 0.09), 6px 0px 13px 0px rgba(0, 0, 0, 0.1);
+	overflow: auto;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 5%;
+}
+
+.side-navigation a {
+	width: 100%;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 9px 0;
+	color: #bb9cc0;
+	opacity: 70%;
+}
+
 .page-nav {
     display: flex;
     flex-direction: column;

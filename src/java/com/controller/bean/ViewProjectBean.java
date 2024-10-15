@@ -224,9 +224,12 @@ public class ViewProjectBean implements java.io.Serializable {
     
     public void deleteTask(Integer taskId) {
         Task targetTask = this.taskList.stream().filter(t -> t.getId() == taskId).findFirst().orElse(null);
-        boolean isSuccessful = taskService.deleteTask(targetTask);
-        if(isSuccessful) {
-            refreshTask();
+        if(targetTask != null) {
+            boolean isSuccessful;
+            isSuccessful = taskService.deleteTask(targetTask);
+            if(isSuccessful) {
+                refreshTask();
+            }
         }
     }
     

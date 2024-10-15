@@ -31,9 +31,16 @@ public class TaskService {
     
     public boolean saveTask(Integer taskId, User user, Project project, String title, String description, Date deadline, int priority) {
         Status onGoingStat = statusDAO.getStatusById(1);
-        ProjectWorker pw = user.getProjectWorkers().stream().filter(pws -> pws.getProject().getId() == project.getId()).findFirst().orElse(null);
-        Task currentTask = new Task(taskId, pw, onGoingStat, title, description, priority, deadline);
-        return taskDAO.updateTask(currentTask);
+        Task targetTask = taskDAO.getTaskById(taskId);
+        ProjectWorker tpw = user.getProjectWorkers().stream().filter(pw -> pw.getProject().getId() == project.getId()).findFirst().orElse(null);
+        targetTask.setProjectWorker(tpw);
+        targetTask.setDeadline(deadline);
+        targetTask.setTitle(title);
+        targetTask.setPriority(priority);
+        targetTask.setDescription(description);
+        targetTask.setStatus(onGoingStat);
+        
+        return taskDAO.updateTask(targetTask);
     }
     
     public Task getTaskById(Integer taskId) {

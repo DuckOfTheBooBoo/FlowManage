@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="main">
-                    <h:form>
+                    <h:form id="projects-form">
                     <h:dataTable value="#{utilBean.sortProjectPriority(projectBean.projectList)}" var="project" styleClass="table table-borderless table-hover">
                         <h:column>
                             <f:facet name="header">ID</f:facet>
@@ -81,7 +81,7 @@
                                     <f:param name="project_id" value="#{project.id}" />
                                 </h:link>
                                 <h:commandButton styleClass="btn btn-sm btn-danger" action="#{projectBean.deleteProject(project.id)}" value="Delete" rendered="#{projectBean.isAuthorized(project)}">
-                                    <f:ajax execute="@form" render="@form" />
+                                    <f:ajax execute="@form" render="projects-form" />
                                 </h:commandButton>
                             </h:panelGroup>
                         </h:column>

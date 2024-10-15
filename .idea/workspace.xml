@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b3f8f48c-a99d-4cdd-86a0-8b91cbf9273f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/controller/bean/ContactBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/controller/bean/ContactBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/controller/bean/TaskBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/controller/bean/TaskBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/controller/bean/ViewProjectBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/controller/bean/ViewProjectBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/dao/ProjectDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/dao/ProjectDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/model/pojo/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/model/pojo/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/contact-form.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/contact-form.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/dashboard.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/login.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/login.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/project-form.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/project-form.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/project.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/project.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/projects.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/projects.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/styles/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/styles/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/styles/task-form.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/styles/task-form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/task-form.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/web/task-form.xhtml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2nSqS8pX5SJghc2chuqdj0AXYNQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b3f8f48c-a99d-4cdd-86a0-8b91cbf9273f" name="Changes" comment="" />
+      <created>1728976822456</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1728976822456</updated>
+    </task>
+    <servers />
+  </component>
+</project>

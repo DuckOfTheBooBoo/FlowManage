@@ -10,6 +10,7 @@ import com.model.pojo.ProjectWorker;
 import com.model.pojo.User;
 import com.service.ProjectService;
 import com.service.UserService;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
@@ -30,6 +31,8 @@ public class ContactBean implements java.io.Serializable {
     private String role;
     private Project project;
     private Integer projectId;
+    private Integer userId;
+    private ProjectWorker pw;
     private String userEmail;
     private ProjectService ps;
     private UserService us;
@@ -54,9 +57,33 @@ public class ContactBean implements java.io.Serializable {
         
         if (projectId != null) {
             this.project = ps.getProjectById(authBean.getLoggedInUser(), projectId);
+            
+            if (userId != null) {
+                pw = this.project.getProjectWorkers().stream().filter(p -> Objects.equals(p.getUser().getId(), userId)).findFirst().orElse(null);
+                if (pw != null) {
+                    role = pw.getRole();
+                    userEmail = pw.getUser().getEmail();
+                }
+            }
         }
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public ProjectWorker getPw() {
+        return pw;
+    }
+
+    public void setPw(ProjectWorker pw) {
+        this.pw = pw;
+    }
+    
     public User getTargetUser() {
         return targetUser;
     }
@@ -89,6 +116,10 @@ public class ContactBean implements java.io.Serializable {
             return null;
         }
         
+        if (userId != null) {
+            return updateWorker();
+        }
+        
         User searchUser = us.getUserByEmail(userEmail);
         
         if (searchUser != null) {
@@ -111,6 +142,18 @@ public class ContactBean implements java.io.Serializable {
         }
         ctx.addMessage("contact-form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to add user to the project.", null));
         return null;
+    }
+    
+    private String updateWorker() {
+        pw.setRole(role);
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        boolean isSuccessful = ps.updateProjectWorker(pw);
+        if (!isSuccessful) {
+            ctx.addMessage("contact-form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to add user to the project.", null));
+            return null;
+        }
+        
+        return "project?faces-redirect=true&amp;project_id="+projectId;
     }
 
     public String getUserEmail() {
@@ -144,6 +187,12 @@ public class ContactBean implements java.io.Serializable {
     public void setUs(UserService us) {
         this.us = us;
     }
-    
-    
+
+    public AuthBean getAuthBean() {
+        return authBean;
+    }
+
+    public void setAuthBean(AuthBean authBean) {
+        this.authBean = authBean;
+    }
 }

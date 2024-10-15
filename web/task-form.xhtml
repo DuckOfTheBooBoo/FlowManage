@@ -73,6 +73,7 @@
               <div id="titleHelp" class="form-text">
                 This will be your task's title.
               </div>
+              <h:message for="taskTitle" styleClass="text-danger" />
             </div>
             <div class="mb-3">
               <label for="taskDescription" class="form-label fs-4 fw-semibold"
@@ -89,6 +90,8 @@
               <div id="descHelp" class="form-text">
                 This will be your task's description.
               </div>
+              <h:message for="taskDescription" styleClass="text-danger" />
+
             </div>
           </div>
         </div>
@@ -104,23 +107,25 @@
             </div>
             <div class="mb-3">
               <label for="taskAssignee">Assignee:</label>
-              <h:selectOneMenu value="#{taskBean.assigneeId}" id="taskAssignee" required="true">
+              <h:selectOneMenu value="#{taskBean.assigneeId}" id="taskAssignee" required="true" requiredMessage="Please select a user to assign">
                   <f:selectItems value="#{taskBean.projectUsers}" var="user" itemLabel="#{utilBean.getFullName(user)}" itemValue="#{user.id}" /> 
               </h:selectOneMenu>
+              <h:message for="taskAssignee" styleClass="text-danger" />
+
             </div>
-            <div class="mb-3 d-flex flex-row gap-2">
+            <div class="mb-3 d-flex flex-column gap-2">
               <label for="projectDeadline">Deadline:</label>
               <h:inputText id="projectDeadline" styleClass="form-control datepicker"
                            value="#{taskBean.deadline}" converterMessage="Enter deadline in MM/DD/YY format"
                 required="true" requiredMessage="You must enter the project's deadline">
-                <f:convertDateTime pattern="MM/dd/yy" type="date"/>
+                <f:convertDateTime pattern="MM/dd/yyyy" type="date"/>
               </h:inputText>
-              <h:message for="projectDeadline" style="color:red"/>
+              <h:message for="projectDeadline" styleClass="text-danger"/>
             </div>
           </div>
           <div class="attribute-action">
               <h:commandButton value="#{taskBean.taskId == null ? 'Submit' : 'Save'}" styleClass="btn submit-btn" id="submit-btn" action="#{taskBean.addNewTask}"/>
-            <button id="cancel-btn" type="" class="btn fw-semibold">Cancel</button>
+              <button id="cancel-btn" type="" class="btn fw-semibold" onclick="window.history.back(); return false;">Cancel</button>
             <button id="reset-btn" type="" class="btn fw-semibold text-danger">Reset</button>
           </div>
         </div>
@@ -147,12 +152,21 @@
           const cancelBtn = document.querySelector("#cancel-btn");
           const resetBtn = document.querySelector("#reset-btn");
           
-          cancelBtn.addEventListener("click", (e) => {
-              history.back();
-          })
           
           resetBtn.addEventListener("click", (e) => {
-              
+            const taskForm = document.querySelector("#task-form");
+            const fields = taskForm.querySelectorAll('input, textarea');
+    
+            fields.forEach(field => {
+                if (field.type !== 'button' &amp;&amp; field.type !== 'submit' &amp;&amp; 
+                    field.type !== 'reset' &amp;&amp; field.type !== 'hidden') {
+                    field.value = '';
+
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        field.checked = false;
+                    }
+                }
+            });
           })
       </script>
     </h:body>

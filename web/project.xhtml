@@ -155,17 +155,17 @@
                             <f:facet name="header">Action</f:facet>
                             <h:panelGroup styleClass="d-flex gap-2 justify-content-around" 
                                           rendered="#{utilBean.getFullName(viewProjectBean.authBean.loggedInUser) == utilBean.getFullName(task.projectWorker.user) || viewProjectBean.loggedInRole() == 'manager'}">
-                                <h:link value="Edit" outcome="/task-form.xhtml" styleClass="btn btn-primary" rendered="#{viewProjectBean.loggedInRole() == 'manager'}">
+                                <h:link value="Edit" outcome="/task-form.xhtml" styleClass="btn btn-primary btn-sm" rendered="#{viewProjectBean.loggedInRole() == 'manager'}">
                                     <f:param name="project_id" value="#{task.projectWorker.project.id}" />
                                     <f:param name="task_id" value="#{task.id}" />
                                 </h:link>
-                                <h:commandButton styleClass="btn btn-danger" value="Delete" 
+                                <h:commandButton styleClass="btn btn-danger btn-sm" value="Delete" 
                                                  rendered="#{viewProjectBean.loggedInRole() == 'manager'}" 
                                                  action="#{viewProjectBean.deleteTask(task.id)}" id="deleteBtn">
                                     <f:ajax execute="@form" render="taskForm" />
                                 </h:commandButton>
-                                <h:commandButton styleClass="btn btn-success" value="Set Completed" 
-                                                 rendered="#{viewProjectBean.loggedInRole() != 'manager' &amp;&amp; task.status.id == 1}" 
+                                <h:commandButton styleClass="btn btn-success btn-sm" value="Set Completed" 
+                                                 rendered="#{task.projectWorker.user.id == viewProjectBean.authBean.loggedInUser.id &amp;&amp; task.status.id == 1}" 
                                                  action="#{viewProjectBean.completeTask(task.id)}" id="completeBtn">
                                     <f:ajax execute="@form" render="taskForm" />
                                 </h:commandButton>
@@ -205,9 +205,10 @@
                         <h:column rendered="#{viewProjectBean.loggedInRole() == 'manager'}">
                             <f:facet name="header">Action</f:facet>
                             <h:panelGroup styleClass="d-flex gap-3">
-                                <h:commandLink value="Edit" styleClass="text-decoration-none btn btn-primary">
-                                    <f:param name="page" value="project-form" />
-                                </h:commandLink>
+                                <h:link value="Edit" styleClass="text-decoration-none btn btn-primary" outcome="contact-form.xhtml">
+                                    <f:param name="user_id" value="#{pw.user.id}" />
+                                    <f:param name="project_id" value="#{pw.project.id}" />
+                                </h:link>
                                 <h:commandButton value="Delete" styleClass="btn btn-danger" action="#{viewProjectBean.deleteMember(pw.user.id)}">
                                     <f:ajax execute="@form" render="peopleForm" />
                                 </h:commandButton>

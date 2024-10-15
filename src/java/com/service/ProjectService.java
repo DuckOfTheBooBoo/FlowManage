@@ -34,6 +34,10 @@ public class ProjectService {
     public boolean addUserToProject(Project project, User user, String role) {
         return projectDAO.addUserToProject(project, user, role);
     }
+    
+    public boolean updateProjectWorker(ProjectWorker pw) {
+        return projectDAO.updateUserInProject(pw);
+    }
 
     public boolean updateProject(Project project) {
         return projectDAO.updateProject(project);

@@ -2,12 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/util/HibernateUtil.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/dao/ProjectDAO.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/service/ProjectService.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/src/java/com/controller/bean/ProjectBean.java</file>
-            <file>file:/C:/Users/pc/Datas/Programming/Java/FlowManage/web/project-form.xhtml</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

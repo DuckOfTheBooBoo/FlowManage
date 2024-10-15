@@ -66,10 +66,10 @@ public class Task  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY, targetEntity = ProjectWorker.class)
+@ManyToOne(fetch=FetchType.EAGER, targetEntity = ProjectWorker.class)
     @JoinColumns( { 
-        @JoinColumn(name="user_id", referencedColumnName="user_id", nullable=false, insertable=true, updatable=false), 
-        @JoinColumn(name="project_id", referencedColumnName="project_id", nullable=false, insertable=true, updatable=false) } )
+        @JoinColumn(name="user_id", referencedColumnName="user_id", nullable=false, insertable=true, updatable=true), 
+        @JoinColumn(name="project_id", referencedColumnName="project_id", nullable=false, insertable=true, updatable=true) } )
     public ProjectWorker getProjectWorker() {
         return this.projectWorker;
     }

@@ -52,7 +52,7 @@
         </div>
 
     <!-- MAIN BODY -->
-    <div class="projects">
+    <div class="projects overflow-auto">
       <div class="main">
           <h3>#{projectBean.projectId != null ? 'Edit Project' : 'New Project'}</h3>
         <h:form>
@@ -69,6 +69,7 @@
             <div id="titleHelp" class="form-text">
               This will be your project's title.
             </div>
+            <h:message for="projectTitle" styleClass="text-danger" />
           </div>
           <div class="mb-3">
             <label for="projectDescription">Description</label>
@@ -83,6 +84,7 @@
             <div id="descHelp" class="form-text">
               This will be your project's description.
             </div>
+            <h:message for="projectDescription" styleClass="text-danger" />
           </div>
           <div class="mb-3">
             <label for="projectPriority">Priority:</label>
@@ -91,23 +93,24 @@
                     <f:selectItems var="priority" value="#{projectBean.priorityList}" itemLabel="#{priority.label}" itemValue="#{priority.value}" /> 
                 </h:selectOneMenu>
             </div>
+            <h:message for="priority" styleClass="text-danger" />
           </div>
           <div class="mb-3">
               <label for="projectDeadline">Deadline</label>
               <h:inputText id="projectDeadline" styleClass="form-control datepicker"
                 value="#{projectBean.deadline}" converterMessage="Enter deadline in MM/DD/YY format"
-                required="true" requiredMessage="You must enter the project's deadline">
-                <f:convertDateTime pattern="MM/dd/yy" type="date"/>
+                required="true" requiredMessage="You must enter the project's deadline" pt:autocomplete="off">
+                <f:convertDateTime pattern="MM/dd/yyyy" type="date"/>
               </h:inputText>
               <h:message for="projectDeadline" style="color:red"/>
             </div>
-            <div class="mb-3">
+            <h:panelGroup layout="block" class="mb-3" rendered="#{projectBean.projectId != null}">
                 <label for="projectStatus">Status: <br/></label>
-              <h:selectOneMenu value="#{projectBean.statusId}" id="projectStatus" rendered="#{projectBean.projectId != null}">
+              <h:selectOneMenu value="#{projectBean.statusId}" id="projectStatus">
                   <f:selectItems var="status" value="#{projectBean.statusList}" itemLabel="#{status.status}" itemValue="#{status.id}" /> 
               </h:selectOneMenu>
               <h:message for="projectStatus" style="color:red"/>
-            </div>
+            </h:panelGroup> 
             <h:commandButton value="Save" class="btn" action="#{projectBean.saveProject(projectBean.projectId)}" />
         </h:form>
       </div>
