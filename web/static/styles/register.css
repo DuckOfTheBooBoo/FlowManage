@@ -1,7 +1,6 @@
 /** @format */
 
 body {
-<<<<<<< HEAD
 	background-image: url("background.svg");
 	width: 100dvw;
 	height: 100dvh;
@@ -76,8 +75,6 @@ body {
 	text-decoration: none;
 	text-transform: capitalize;
 	color: #bb9cc0;
-}
-=======
     background-color: #FFE5F3;
     width: 100dvw;
     height: 100dvh;
@@ -156,4 +153,3 @@ input[type="submit"] {
     width: 90%;
     text-align: right;
 }
->>>>>>> 3f3d1cb1d7d2a4f815ba1ef6e855949b55434f2e

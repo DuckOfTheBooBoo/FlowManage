@@ -107,14 +107,13 @@ body {
 	color: #ffffff;
 }
 
-<<<<<<< HEAD
 .background-img {
 	position: absolute;
 	top: 100px;
 
 	z-index: -1;
 }
-=======
+
 #dashboard-box {
 	width: 100%;
 	height: 100%;
@@ -126,4 +125,3 @@ body {
 .container {
 	overflow: auto;
 }
->>>>>>> d4f2e2e (pre-final)
